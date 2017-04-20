@@ -18,21 +18,39 @@ public class User {
 	private String name;
 	private String email;
 	
-	public Long getId() {
+/*	public Long getId() {
 		return id;
+	}*/
+	public boolean matchId(Long newId) {
+		if (newId == null){
+			return false;
+		}
+		return newId.equals(id);
 	}
 	
 	public void setUserID(String userID) {
 		this.userID = userID;
 	}
+
+	public String getUserId() {
+		return userID;
+	}
 	
 	public void setPassword(String password) {
 		this.password = password;
+		
 	}
 	
-	public String getPassword() {
-		return password;
+/*	public String getPassword() {
+	return password;
+}*/
+	public boolean matchPassword(String newPassword) {
+		if (newPassword == null){
+			return false;
+		}	
+		return newPassword.equals(password);
 	}
+	
 	
 	public void setName(String name) {
 		this.name = name;
@@ -52,5 +70,6 @@ public class User {
 	public String toString() {
 		return "User [userID=" + userID + ", password=" + password + ", name=" + name + ", email=" + email + "]";
 	}
+
 
 }

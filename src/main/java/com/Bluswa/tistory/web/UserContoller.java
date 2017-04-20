@@ -34,13 +34,14 @@ public class UserContoller {
 			return "redirect:/users/loginForm";
 		}
 		
-		if (!password.equals(user.getPassword())) {
+//		if (!password.equals(user.getPassword())) { //get패스워드 필요없어짐
+		if (!user.matchPassword(password)) {
 			System.out.println("Login Failure!");
 			return "redirect:/users/loginForm";
 		}
 		
 		System.out.println("Login Success!");
-		session.setAttribute("sessionedUser", user);
+		session.setAttribute(HttpSessionUtils.USER_SESSION_KEY, user);
 		return "redirect:/";
 	}
 
@@ -51,7 +52,7 @@ public class UserContoller {
 
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
-		session.removeAttribute("sessionedUser");
+		session.removeAttribute("HttpSessionUtils.USER_SESSION_KEY");
 		return "redirect:/";
 	}
 	
@@ -70,13 +71,14 @@ public class UserContoller {
 	
 	@GetMapping("/{id}/form")
 	public String updateForm(@PathVariable Long id, Model model, HttpSession session) {
-		Object tempUser = session.getAttribute("sessionedUser"); //세선에서 값을 가져오면 object값으로 관리
-		if (tempUser == null) {
+//		Object tempUser = session.getAttribute("sessionedUser"); //세선에서 값을 가져오면 object값으로 관리 //java함수로 구현
+		if (HttpSessionUtils.isLoginUser(session)) {
 			return "redirect:/users/loginForm";
 		}
 		
-		User sessionedUser = (User)tempUser;
-		if (!id.equals(sessionedUser.getId())) {
+		User sessionedUser = HttpSessionUtils.getUserFromSession(session);
+//		if (!id.equals(sessionedUser.getId())) {
+		if (!sessionedUser.matchId(id)) {
 			throw new IllegalStateException("You can't update the another user");
 		}
 		
@@ -93,7 +95,8 @@ public class UserContoller {
 		}
 		
 		User sessionedUser = (User)tempUser;
-		if (!id.equals(sessionedUser.getId())) {
+//		if (!id.equals(sessionedUser.getId())) {
+		if (!sessionedUser.matchId(id)) {
 			throw new IllegalStateException("You can't update the another user");
 		}
 				
