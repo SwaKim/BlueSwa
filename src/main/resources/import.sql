@@ -1,0 +1,2 @@
+INSERT INTO USER (USERID, password, NAME, EMAIL) VALUES ('kkk3206', '951753', '김수환', 'kkk3206@naver.com')
+INSERT INTO USER (USERID, password, NAME, EMAIL) VALUES ('tmdhk123', '951753', '성와', 'tmdhk123@gamil.com')
