@@ -13,7 +13,7 @@ import com.Bluswa.tistory.domain.QuestionRepository;
 import com.Bluswa.tistory.domain.User;
 
 @Controller
-@RequestMapping("questions")
+@RequestMapping("/questions")
 public class QuestionController {
 	
 	@Autowired
@@ -34,7 +34,7 @@ public class QuestionController {
 		}
 		
 		User sessionUser = HttpSessionUtils.getUserFromSession(session);
-		Question newQuestion = new Question(sessionUser.getUserId(), title, contents);
+		Question newQuestion = new Question(sessionUser, title, contents);
 		questionRepository.save(newQuestion);				
 		return "redirect:/";
 	}
